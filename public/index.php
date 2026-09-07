@@ -16,11 +16,11 @@ $internships = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <header class="site-header">
         <div class="container header-inner">
-            <a href="/" class="logo">Praktyka<span>Finder</span></a>
+            <a href="" class="logo">Praktyka<span>Finder</span></a>
             <nav class="main-nav">
-                <a href="/praktyki.php">Praktyki</a>
-                <a href="/login.php">Zaloguj się</a>
-                <a href="/register.php" class="btn btn-primary">Zarejestruj się</a>
+                <a href="praktyki.php">Praktyki</a>
+                <a href="login.php">Zaloguj się</a>
+                <a href="register.php" class="btn btn-primary">Zarejestruj się</a>
             </nav>
         </div>
     </header>
@@ -31,7 +31,7 @@ $internships = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <p class="hero-subtitle">Przeglądaj, filtruj i śledź oferty praktyk dopasowane do Twojego kierunku.</p>
             <div class="hero-stats">
                 <span class="stat-number">3</span> praktyki dostępne teraz
-            </div>
+            </div>  
         </div>
     </section>
 
@@ -62,21 +62,20 @@ $internships = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <section class="internships">
         <div class="container">
             <div class="internships-grid">
-
-    <?php foreach ($internships as $internship): ?>
-        <div class="internship-card">
-            <div class="card-header">
-                <h3><?= htmlspecialchars($internship['company_name']) ?></h3>
-                <?php if ($internship['is_paid']): ?>
-                    <span class="badge badge-paid">Płatna</span>
-                <?php else: ?>
-                    <span class="badge badge-unpaid">Nieodpłatna</span>
-                <?php endif; ?>
-            </div>
+                <?php foreach ($internships as $internship): ?>
+                    <div class="internship-card">
+                    <div class="card-header">
+                        <h3><?= htmlspecialchars($internship['company_name']) ?></h3>
+                            <?php if ($internship['is_paid']): ?>
+                                <span class="badge badge-paid">Płatna</span>
+                            <?php else: ?>
+                                <span class="badge badge-unpaid">Nieodpłatna</span>
+                            <?php endif; ?>
+                    </div>
             <p class="card-location">📍 <?= htmlspecialchars($internship['city']) ?></p>
             <p class="card-direction"><?= htmlspecialchars($internship['direction']) ?></p>
             <p class="card-hours"><?= (int)$internship['hours'] ?> godzin</p>
-            <a href="/praktyka.php?id=<?= (int)$internship['id'] ?>" class="btn btn-outline">Szczegóły</a>
+            <a href="praktyka.php?id=<?= (int)$internship['id'] ?>" class="btn btn-outline">Szczegóły</a>
         </div>
     <?php endforeach;?>
 </div>
