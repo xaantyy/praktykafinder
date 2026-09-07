@@ -1,3 +1,9 @@
+<?php
+require __DIR__ . '/../src/config/database.php';
+$stmt = $pdo->query("SELECT * FROM internships ORDER BY created_at DESC");
+$internships = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -57,52 +63,23 @@
         <div class="container">
             <div class="internships-grid">
 
-                <div class="internship-card">
-                    <div class="card-header">
-                        <h3>Software House Kraków</h3>
-                        <span class="badge badge-unpaid">Nieodpłatna</span>
-                    </div>
-                    <p class="card-location">📍 Kraków</p>
-                    <p class="card-direction">Technik Programista</p>
-                    <div class="card-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">SQL</span>
-                    </div>
-                    <p class="card-hours">140 godzin</p>
-                    <a href="/praktyka.php?id=1" class="btn btn-outline">Szczegóły</a>
-                </div>
-
-                <div class="internship-card">
-                    <div class="card-header">
-                        <h3>IT Support Kraków</h3>
-                        <span class="badge badge-unpaid">Nieodpłatna</span>
-                    </div>
-                    <p class="card-location">📍 Kraków</p>
-                    <p class="card-direction">Technik Informatyk</p>
-                    <div class="card-tags">
-                        <span class="tag">Windows</span>
-                        <span class="tag">Networking</span>
-                    </div>
-                    <p class="card-hours">140 godzin</p>
-                    <a href="/praktyka.php?id=2" class="btn btn-outline">Szczegóły</a>
-                </div>
-
-                <div class="internship-card">
-                    <div class="card-header">
-                        <h3>WebDev Studio</h3>
-                        <span class="badge badge-paid">Płatna</span>
-                    </div>
-                    <p class="card-location">📍 Kraków</p>
-                    <p class="card-direction">Technik Programista</p>
-                    <div class="card-tags">
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">Git</span>
-                    </div>
-                    <p class="card-hours">140 godzin</p>
-                    <a href="/praktyka.php?id=3" class="btn btn-outline">Szczegóły</a>
-                </div>
-
+    <?php foreach ($internships as $internship): ?>
+        <div class="internship-card">
+            <div class="card-header">
+                <h3><?= htmlspecialchars($internship['company_name']) ?></h3>
+                <?php if ($internship['is_paid']): ?>
+                    <span class="badge badge-paid">Płatna</span>
+                <?php else: ?>
+                    <span class="badge badge-unpaid">Nieodpłatna</span>
+                <?php endif; ?>
             </div>
+            <p class="card-location">📍 <?= htmlspecialchars($internship['city']) ?></p>
+            <p class="card-direction"><?= htmlspecialchars($internship['direction']) ?></p>
+            <p class="card-hours"><?= (int)$internship['hours'] ?> godzin</p>
+            <a href="/praktyka.php?id=<?= (int)$internship['id'] ?>" class="btn btn-outline">Szczegóły</a>
+        </div>
+    <?php endforeach;?>
+</div>
         </div>
     </section>
 
